@@ -14,11 +14,7 @@ const create = async (req, res) => {           //Add post's data to DB
     data.dislikes = req.body.dislikes;
     data.user = user._id;                               //Adds user_id to the post
     await data.save();
-    res.send("Data Inserted:");
-
-    user.posts.push(data._id);                          //Adds post_id to the user (n to 1 relation)
-    await user.save();
-      
+    res.send("Data Inserted:");      
 }
 
 const get = async (req, res) => {             //Displays all posts 

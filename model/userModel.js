@@ -22,9 +22,9 @@ const user = mongoose.Schema({        //Creates User Schema
         required: true,
     },
     mob: {
-        type: Number,
+        type: String,
         required: true,
-       // max:10 
+       // maxlength:13
     },
     dob: {
         type: String,
@@ -33,14 +33,7 @@ const user = mongoose.Schema({        //Creates User Schema
     bio: {
         type: String,
         required: true
-    },
-    posts: [                                        //Relates n posts to user
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Post",
-            required: true
-        }
-    ]
+    }
 
 });
 
