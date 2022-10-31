@@ -23,8 +23,7 @@ const user = mongoose.Schema({        //Creates User Schema
     },
     mob: {
         type: String,
-        required: true,
-       // maxlength:13
+        required: true
     },
     dob: {
         type: String,
