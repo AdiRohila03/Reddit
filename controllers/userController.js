@@ -19,7 +19,6 @@ const remove = async (req, res) => {          //Removes a paricular user
 
     } catch (error) {
         res.send("Id Not Found");
-        console.log("Id Not Found");
         console.log(err.message);
     };
 
@@ -36,7 +35,6 @@ const update = async (req, res) => {          //Update/Change data
         res.send(data);
     } catch (error) {
         res.send("Id Not Found");
-        console.log("Id Not Found");
         console.log(err.message);
     }
 

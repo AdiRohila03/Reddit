@@ -9,12 +9,11 @@ const create = async (req, res) => {           //Add post's data to DB
     data.title = req.body.title;
     data.text = req.body.text;
     data.created_by = req.body.created_by;
-    data.uploaded_on  = req.body.uploaded_on;
     data.likes = req.body.likes;
     data.dislikes = req.body.dislikes;
-    data.user = user._id;                               //Adds user_id to the post
+    data.user = user._id;                            //Adds user_id to the post
     await data.save();
-    res.send("Data Inserted:");      
+    res.send("Post Created:");      
 }
 
 const get = async (req, res) => {             //Displays all posts 
@@ -25,7 +24,7 @@ const get = async (req, res) => {             //Displays all posts
 const remove = async (req, res) => {          //Removes a paricular post 
     try {
         let data = await Post.findOneAndDelete(req.params);
-        res.send("Data Deleted");
+        res.send("Post Deleted");
 
     } catch (error) {
         res.send("Id Not Found");
@@ -41,7 +40,7 @@ const update = async (req, res) => {          //Update/Change post details
                 $set: req.body                                 //Updated Value
             }
         );
-        res.send("Updated Data:");
+        res.send("Updated Post:");
         res.send(data);
     } catch (error) {
         res.send("Id Not Found");

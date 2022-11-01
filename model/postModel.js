@@ -14,17 +14,17 @@ const post = mongoose.Schema({          //Creates Post Schema
         required: true
     },
     uploaded_on: {
-        type: String,
-        required: true
-        /*type: Date,
-        default: Date.now */
+        type: Date,
+        default: Date.now 
     },
     likes: {
         type: Number,
+        default: 0,
         required: true
     },
     dislikes: {
         type: Number,
+        default: 0,
         required: true
     },
     user: {                                          //Relates 1 user to posts
@@ -32,7 +32,7 @@ const post = mongoose.Schema({          //Creates Post Schema
         ref: "User",
         required: true
     }
-});
+},{timestamps : true});
 
 const Post = mongoose.model("Post", post);
 module.exports = Post; 

@@ -20,10 +20,13 @@ const user = mongoose.Schema({        //Creates User Schema
     password: {
         type: String,
         required: true,
+        minlength:5
     },
     mob: {
         type: String,
-        required: true
+        required: true,
+        minlength:10,
+        maxlength:15
     },
     dob: {
         type: String,
@@ -34,7 +37,7 @@ const user = mongoose.Schema({        //Creates User Schema
         required: true
     }
 
-});
+},{timestamps : true});
 
 const User = mongoose.model("User", user);
 module.exports = User;

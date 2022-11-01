@@ -1,19 +1,19 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const postRoute = express();
-const postController = require('../controllers/postController');
+const {create,get,remove,update,likes,dislikes} = require('../controllers/postController');
 
-postRoute.post('/create/:_id', postController.create);
+postRoute.post('/create/:_id',create);
 
-postRoute.get('/detail', postController.get);
+postRoute.get('/detail',get);
 
-postRoute.put('/update/:_id', postController.update);
+postRoute.put('/update/:_id',update);
 
-postRoute.delete('/delete/:_id', postController.remove);
+postRoute.delete('/delete/:_id',remove);
 
-postRoute.put('/likes/:_id', postController.likes);
+postRoute.put('/likes/:_id',likes);
 
-postRoute.put('/dislikes/:_id', postController.dislikes);
+postRoute.put('/dislikes/:_id',dislikes);
 
 module.exports = {postRoute}; 
 
@@ -22,8 +22,7 @@ module.exports = {postRoute};
 { 
    "title": ""   ,
    "text":   ""   ,
-   "created_by":""   ,
-   "uploaded_on": "" ,
+   "created_by":"" ,
    "likes":  ,
    "dislikes":  
 } 

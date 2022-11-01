@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const userRoute = express();
-const userController = require('../controllers/userController');
+const {create,get,remove,update} = require('../controllers/userController');
 
-userRoute.post('/create', userController.create);
+userRoute.post('/create',create);
 
-userRoute.get('/detail', userController.get);
+userRoute.get('/detail',get);
 
-userRoute.put('/update/:_id', userController.update);
+userRoute.put('/update/:_id',update);
 
-userRoute.delete('/delete/:_id', userController.remove);
+userRoute.delete('/delete/:_id',remove);
 
 module.exports = {userRoute};
 
