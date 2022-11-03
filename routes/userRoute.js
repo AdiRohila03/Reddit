@@ -2,13 +2,13 @@ const express = require('express');
 const userRoute = express();
 const {create,get,remove,update} = require('../controllers/userController');
 
-userRoute.post('/create',create);
+userRoute.post('/',create);
 
-userRoute.get('/detail',get);
+userRoute.get('/',get);
 
-userRoute.patch('/update/:_id',update);
+userRoute.patch('/:_id',update);
 
-userRoute.delete('/delete/:_id',remove);
+userRoute.delete('/:_id',remove);
 
 module.exports = {userRoute};
 

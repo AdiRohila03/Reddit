@@ -2,13 +2,13 @@ const express = require('express');
 const postRoute = express();
 const {create,get,remove,update,likes,dislikes} = require('../controllers/postController');
 
-postRoute.post('/create/:_id',create);
+postRoute.post('/:_id',create);
 
-postRoute.get('/detail',get);
+postRoute.get('/',get);
 
-postRoute.patch('/update/:_id',update);
+postRoute.patch('/:_id',update);
 
-postRoute.delete('/delete/:_id',remove);
+postRoute.delete('/:_id',remove);
 
 postRoute.put('/likes/:_id',likes);
 
