@@ -1,16 +1,10 @@
-const mongoose = require('mongoose');
 const Post = require('../model/postModel');   
 const User = require('../model/userModel'); 
 
 const create = async (req, res) => {           //Add post's data to DB
     const user = await User.findOne({_id: req.params._id});      //Stores user_id from params
 
-    const data = new Post();                           //Takes input from postman body
-    data.title = req.body.title;
-    data.text = req.body.text;
-    data.created_by = req.body.created_by;
-    data.likes = req.body.likes;
-    data.dislikes = req.body.dislikes;
+    const data = new Post(req.body);                           //Takes input from postman body
     data.user = user._id;                            //Adds user_id to the post
     await data.save();
     res.send("Post Created:");      
@@ -23,7 +17,7 @@ const get = async (req, res) => {             //Displays all posts
 
 const remove = async (req, res) => {          //Removes a paricular post 
     try {
-        let data = await Post.findOneAndDelete(req.params);
+        let data = await Post.findByIdAndDelete(req.params);
         res.send("Post Deleted");
 
     } catch (error) {
@@ -35,12 +29,11 @@ const remove = async (req, res) => {          //Removes a paricular post
 
 const update = async (req, res) => {          //Update/Change post details
     try {
-        let data = await Post.findOneAndUpdate(req.params,      //Condition for update(post_id in this case given in routes)
+        let data = await Post.findByIdAndUpdate(req.params,      //Condition for update(post_id in this case given in routes)
             {
                 $set: req.body                                 //Updated Value
             }
         );
-        res.send("Updated Post:");
         res.send(data);
     } catch (error) {
         res.send("Id Not Found");
@@ -71,11 +64,4 @@ const dislikes = async (req, res) => {
     }
     }
 
-module.exports = {
-    create,
-    get,
-    remove,
-    update,
-    likes,
-    dislikes
-}
+module.exports = { create,get,remove,update,likes,dislikes }

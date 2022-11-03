@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const express = require('express');
 const postRoute = express();
 const {create,get,remove,update,likes,dislikes} = require('../controllers/postController');
@@ -7,7 +6,7 @@ postRoute.post('/create/:_id',create);
 
 postRoute.get('/detail',get);
 
-postRoute.put('/update/:_id',update);
+postRoute.patch('/update/:_id',update);
 
 postRoute.delete('/delete/:_id',remove);
 
