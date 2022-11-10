@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require ('validator');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const user = mongoose.Schema({        //Creates User Schema
     username: {
@@ -35,7 +35,6 @@ const user = mongoose.Schema({        //Creates User Schema
     },
     bio: {
         type: String,
-        required: true
     }
 
 },{timestamps : true});
@@ -43,12 +42,11 @@ const user = mongoose.Schema({        //Creates User Schema
 //Mongoose 'pre' Middleware operates before the data is saved to DB
 user.pre('save', async function(next){              //cannot use arrow func. since this keyword is used
     try {
-        const salt = await bcrypt.genSalt(10);  // higher the salt_num, the longer it will take a machine to calculate the hash associated with the password default is 10
-        const hashedpass = await bcrypt.hash(this.password, salt);  
-        this.password = hashedpass;
+        // higher the salt_num, the longer it will take a machine to calculate the hash associated with the password default is 10
+        this.password = await bcrypt.hash(this.password, 10);  
         next();             //This tells Mongoose to end the middleware and move on to the next step in the process.
-    } catch (error) {
-        next(error);        
+    } catch (err) {
+        next(err);        
     }
 });
 
