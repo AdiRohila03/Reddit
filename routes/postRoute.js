@@ -1,20 +1,21 @@
 const express = require('express');
 const postRoute = express();
-const {create,get,remove,update,likes,dislikes} = require('../controllers/postController');
+const { create, get, remove, update, likes, dislikes } = require('../controllers/postController');
+const auth = require("../middlewares/auth");
 
-postRoute.post('/:_id',create);
+postRoute.post('/:_id', auth, create);
 
-postRoute.get('/',get);
+postRoute.get('/', auth, get);
 
-postRoute.patch('/:_id',update);
+postRoute.patch('/:_id', auth, update);
 
-postRoute.delete('/:_id',remove);
+postRoute.delete('/:_id', auth, remove);
 
-postRoute.put('/likes/:_id',likes);
+postRoute.put('/likes/:_id', auth, likes);
 
-postRoute.put('/dislikes/:_id',dislikes);
+postRoute.put('/dislikes/:_id', auth, dislikes);
 
-module.exports = {postRoute}; 
+module.exports = { postRoute };
 
 
 /*
@@ -25,4 +26,4 @@ module.exports = {postRoute};
    "likes":  ,
    "dislikes":  
 } 
-*/   
+*/
