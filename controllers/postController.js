@@ -6,6 +6,13 @@ const create = async (req, res) => {                              //Create Post
     //Checks if the entered user_id is present if true stores user details in 'user'
     const user = await User.findOne({ _id: req.params._id });     
     const data = new Post(req.body);                             //Stores Post details from body
+    const file = req.files;
+    console.log(file);
+    //Conversion of img files to Buffer
+    for(var i=0 ; i < file.length ; i++)
+    {
+        data.PostFile[i] = file[i].buffer;
+    }
     data.user = user._id;                                        //Adds user_id to the post schema
     await data.save();
     res.status(200).send({ success: true, Details: data });
@@ -16,7 +23,7 @@ const create = async (req, res) => {                              //Create Post
 }
 
 const get = async (req, res) => {                               //Displays posts 
-    let post = await Post.find();
+    let post = await Post.find().select("-files");
     res.status(200).send({ success: true, Posts: post });
 }
 
