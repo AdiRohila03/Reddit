@@ -2,6 +2,7 @@ const User = require('../model/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
+const upload = require('../middlewares/upload');
 
 //Method to create JWT Token
 const creat_token = async (Email) => {
@@ -41,11 +42,11 @@ const login = async (req, res) => {
 
 }
 
-const create = async (req, res) => {           //Adds user details to DB 
+/*const create = async (req, res) => {           //Adds user details to DB 
     let data = new User(req.body);
     await data.save();
     res.status(200).send({ success: true, message: "Data Inserted" });
-}
+}*/
 
 const get = async (req, res) => {             //Displays user details 
     let data = await User.findOne({ email: req.data.email });
@@ -55,7 +56,7 @@ const get = async (req, res) => {             //Displays user details
 const remove = async (req, res) => {          //Removes a paricular user
     try {
         let data = await User.findByIdAndDelete(req.params);
-        res.send("Data Deleted");
+        res.send("User Deleted");
 
     } catch (error) {
         res.send("Id Not Found");
@@ -79,4 +80,29 @@ const update = async (req, res) => {          //Update/Change data
 
 }
 
-module.exports = { login, create, get, remove, update }
+const create = async (req, res) => {
+    upload(req, res, (err) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            const data = new User(req.body);
+            /*({
+                username: req.body.name,
+                email: req.body.name,
+                password: req.body.name,
+                mob: req.body.name,
+                dob: req.body.name,
+                bio: req.body.name,
+                pf:{
+                    data: req.file.filename
+                }
+            });*/
+            data.save().then(()=>
+            res.status(200).send({ success: true, message: "User Created" })
+            );
+        };
+    });
+};
+
+module.exports = { login, create, get, remove, update } 
