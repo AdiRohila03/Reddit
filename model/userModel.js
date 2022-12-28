@@ -35,8 +35,11 @@ const user = mongoose.Schema({        //Creates User Schema
     },
     bio: {
         type: String,
+    },
+    pf: {
+        type: Buffer,     //Saves file in Mongo DB as Binary Data
+        //default: ""
     }
-
 },{timestamps : true});
 
 //Mongoose 'pre' Middleware operates before the data is saved to DB

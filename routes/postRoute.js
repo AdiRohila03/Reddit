@@ -2,8 +2,9 @@ const express = require('express');
 const postRoute = express();
 const { create, get, remove, update, likes, dislikes } = require('../controllers/postController');
 const auth = require("../middlewares/auth");
+const {p_upload} = require('../middlewares/upload');
 
-postRoute.post('/:_id', auth, create);
+postRoute.post('/:_id', auth, p_upload, create);
 
 postRoute.get('/', auth, get);
 

@@ -31,7 +31,10 @@ const post = mongoose.Schema({          //Creates Post Schema
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true
-    }
+    },
+    files: [{
+        data: Buffer,     //Saves file in Mongo DB as Binary Data
+    }]
 },{timestamps : true});
 
 const Post = mongoose.model("Post", post);
