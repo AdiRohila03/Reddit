@@ -11,7 +11,7 @@ const create = async (req, res) => {                              //Create Post
     //Conversion of img files to Buffer
     for(var i=0 ; i < file.length ; i++)
     {
-        data.PostFile[i] = file[i].buffer;
+        data.files[i] = file[i].buffer;
     }
     data.user = user._id;                                        //Adds user_id to the post schema
     await data.save();
