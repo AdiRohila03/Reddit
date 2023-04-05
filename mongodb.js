@@ -1,15 +1,9 @@
 //MongoAtlas connection
 require('dotenv').config();
-const mongoose = require ('mongoose');
+const mongoose = require('mongoose');
 
-const connectionParams = 
-{
-useNewUrlParser: true, 
-useUnifiedTopology:true, 
-};
-
-mongoose.connect( process.env.URL, async(err)=>{
-        if(err) throw err;
-        console.log("conncted to db");
-    }
-  );
+mongoose.connect(process.env.URL).then(() => {
+    console.log("Conncted to DB");
+}).catch((err) => {
+    console.log("not conncted to db");
+})
