@@ -1,20 +1,24 @@
 const express = require('express');
 const postRoute = express();
-const { create, get, remove, update, likes, dislikes } = require('../controllers/postController');
+const { create, update, remove, likes, dislikes, get, all, timeline } = require('../controllers/postController');
 const auth = require("../middlewares/auth");
-const {p_upload} = require('../middlewares/upload');
+//const { p_upload } = require('../middlewares/upload');
 
-postRoute.post('/:_id', auth, p_upload, create);
-
-postRoute.get('/', auth, get);
+postRoute.post('/:_id', auth, create);
 
 postRoute.patch('/:_id', auth, update);
 
 postRoute.delete('/:_id', auth, remove);
 
-postRoute.put('/likes/:_id', auth, likes);
+postRoute.patch('/likes/:_id', auth, likes);
 
-postRoute.put('/dislikes/:_id', auth, dislikes);
+postRoute.patch('/dislikes/:_id', auth, dislikes);
+
+postRoute.get('/:_id', auth, get);
+
+postRoute.get('/profile/userPosts', auth, all);
+
+postRoute.get('/all/timeline', auth, timeline);
 
 module.exports = { postRoute };
 
@@ -22,9 +26,6 @@ module.exports = { postRoute };
 /*
 { 
    "title": ""   ,
-   "text":   ""   ,
-   "created_by":"" ,
-   "likes":  ,
-   "dislikes":  
+   "text":   ""      
 } 
 */

@@ -1,21 +1,30 @@
 const express = require('express');
 const userRoute = express();
-const {login,create,get,remove,update} = require('../controllers/userController');
+const { reg, login, update, get, remove, user, stats, follow, unfollow, friends } = require('../controllers/userController');
 const auth = require('../middlewares/auth');
-const {u_upload} = require('../middlewares/upload');
+const { u_upload } = require('../middlewares/upload')
 
-userRoute.post('/login',login);
+userRoute.post('/register', u_upload, reg);
 
-userRoute.post('/',u_upload,create);
+userRoute.post('/login', login);
 
-userRoute.get('/',auth,get);
+userRoute.patch('/:_id', auth, update);
 
-userRoute.patch('/:_id',auth,update);
+userRoute.get('/profile', auth, user);
 
-userRoute.delete('/:_id',auth,remove);
+userRoute.get('/', auth, get);
 
-module.exports = {userRoute};
+userRoute.get('/stats', auth, stats);
 
+userRoute.get('/all/friends', auth, friends);
+
+userRoute.delete('/:_id', auth, remove);
+
+userRoute.patch('/follow/:_id', auth, follow);
+
+userRoute.patch('/unfollow/:_id', auth, unfollow);
+
+module.exports = { userRoute };
 
 /*
 { 

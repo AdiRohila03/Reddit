@@ -1,9 +1,8 @@
 require('dotenv').config();
 const jwt = require("jsonwebtoken");
 
-//Method to Authenticate the Token
 const auth = async (req, res, next) => {
-    const auth = req.headers['authorization'];                //To get token from the authorization header
+    const auth = req.headers['auth'];                //To get token from the authorization header
     //Gets the Second element i.e token from the params iff auth is present
     const token = auth && auth.split(' ')[1];
     if (token == null)
@@ -11,12 +10,12 @@ const auth = async (req, res, next) => {
 
     //To Verify entered token
     jwt.verify(token, process.env.KEY, (err, data) => {
-        if (err){
+        if (err) {
             console.log(err);
             return res.status(403).send({ success: false, msg: "Token Invalid" });
-            }
-        req.data = data;                        //Stores the email_id of Loged in user
-        console.log(req.data);
+        }
+        req.user = data;                        //Stores the payload (email, isAdmin & id) of Logged in user
+        console.log(req.user);
         next();
     });
 }

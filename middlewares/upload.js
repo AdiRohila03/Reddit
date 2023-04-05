@@ -1,49 +1,32 @@
 const multer = require('multer');
 
 const u_upload = multer({
-    /*  storage: multer.diskStorage({
-          //To store file in a folder
-          destination: function (req, file, cb) {
-              cb(null, "uploads");
-          },
-          //Name of the File
-          filename: function (req, file, cb) {
-              cb(null, file.originalname + "_" + Date.now);
-              //cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
-              //file.fieldname gives name to the image
-              //path.extname() returns the extension of a file path
-              //file.originalname uses the same name of the file as they were uploaded
-          },
-      }),*/
-    //Size Limit of the file
-    limits: { fileSize: 1000000 },     //Size is in bytes 1000000 bytes = 1MB
-    //Allows only certain files to be uploaded
+    storage: multer.memoryStorage(),        //multer.memoryStorage() is used to store the uploaded files in memory instead of on disk.
+    limits: { fileSize: 1024 * 1024 * 1 },  //1MB size limit
+    filename: (req, file, cb) => {
+        cb(null, file.originalname + "_" + Date.now);
+    },
     fileFilter: (req, file, cb) => {
-        /*
-        // Allowed ext
-        const filetypes = /jpeg|jpg|png/;
-
-        // Check ext
-        const extname =  filetypes.test(path.extname(file.originalname).toLowerCase());
-        // Check mime
-        const mimetype = filetypes.test(file.mimetype);
-
-        if(mimetype && extname)
-        { cb(null,true); }
-        */
-        if (file.originalname.match(/\.(jpg|jpeg|png|PNG|JPEG|JPG)/)) {
+        if (file.originalname.match(/\.(jpg|jpeg|png)/)) {
             cb(null, true);
         } else {
-            cb(null, false);
-            return cb(new Error("Only .jpeg, .jpg, .png image format allowed"));
+            cb(new Error("Only .jpeg, .jpg, .png image format allowed"), false);
         }
     }
-}).single("img");
+}).single("dp");
 
 const p_upload = multer({
-    fileFilter: (req, file, cb) => { 
-        cb(null, true)    },
-    limits: { fileSize: 1000000 }
+    filename: (req, file, cb) => {
+        cb(null, file.originalname + "_" + Date.now);
+    },
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype.match(/\.(jpg|jpeg|png|pdf|doc)/)) {
+            cb(null, true);
+        } else {
+            cb(new Error("Only .jpeg, .jpg, .png image format allowed"), false);
+        }
+    },
+    limits: { fileSize: 1024 * 1024 * 1 }
 }).array("posts", 4);
- 
+
 module.exports = { u_upload, p_upload }
