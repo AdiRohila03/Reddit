@@ -13,7 +13,7 @@ const reg = async (req, res) => {
         dob: req.body.dob,
         bio: req.body.bio,
         pf: {
-            data: req.file.buffer
+            data: req.file ? req.file.buffer : userSchema.defaultImage
         }
     });
     data.save().then(() =>

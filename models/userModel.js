@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const fs = require('fs');
+const defaultImage = fs.readFileSync('dp.png');
 
 const User = new mongoose.Schema({        //Creates User Schema
     username: {
@@ -37,7 +39,10 @@ const User = new mongoose.Schema({        //Creates User Schema
         type: String,
     },
     pf: {
-        data: Buffer,               // binary data of the file
+        data: {
+            type: Buffer,                           // binary data of the file
+            default: defaultImage        // set default value to the binary data of 'dp.png'
+        }
     },
     followers: {
         type: Array,
