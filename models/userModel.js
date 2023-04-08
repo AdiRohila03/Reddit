@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const fs = require('fs');
-const defaultImage = fs.readFileSync('dp.png');
+const defaultImage = fs.readFileSync('uploads/dp.png');
 
 const User = new mongoose.Schema({        //Creates User Schema
     username: {
