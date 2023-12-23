@@ -1,6 +1,6 @@
 const express = require('express');
 const userRoute = express();
-const { reg, login, update, get, remove, user, stats, follow, unfollow, friends } = require('../controllers/userController');
+const { reg, login, update, get, remove, user, stats, follow, unfollow, friends, dp } = require('../controllers/userController');
 const auth = require('../middlewares/auth');
 const { u_upload } = require('../middlewares/upload')
 
@@ -9,6 +9,8 @@ userRoute.post('/register', u_upload, reg);
 userRoute.post('/login', login);
 
 userRoute.patch('/:_id', auth, update);
+
+userRoute.patch('/dp/:_id', auth, u_upload, dp);
 
 userRoute.get('/profile', auth, user);
 

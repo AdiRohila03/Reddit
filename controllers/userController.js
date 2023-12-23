@@ -230,4 +230,40 @@ const unfollow = async (req, res) => {
         res.status(403).json("You can't follow yourself");
 }
 
-module.exports = { reg, login, update, get, remove, user, stats, follow, unfollow, friends }
+//UPDATE DP
+const dp = async (req, res) => {
+    const type = req.query.type;
+    if (req.user.id === req.params._id || req.user.isAdmin) {
+        if (type === "update") {
+            try {
+                const data = new userSchema({
+                    pf: {
+                        data: req.file.buffer
+                    }
+                });
+                data.save();
+                res.status(201).send({ message: "Profile Photo Updated", Profile: pf });
+                console.log(pf);
+            } catch (err) {
+                res.status(500).json(err);
+                console.log(err.message);
+            }
+        } else {
+            try {
+                const data = new userSchema({
+                    pf: {
+                        data: userSchema.defaultImage
+                    }
+                });
+                data.save();
+                res.status(201).send({ message: "Profile Photo Removed", Profile: pf });
+            } catch (err) {
+                res.status(500).json(err);
+            }
+        }
+    } else {
+        res.status(403).json("Allowed to update only your account ")
+    }
+}
+
+module.exports = { reg, login, update, get, remove, user, stats, follow, unfollow, friends, dp }

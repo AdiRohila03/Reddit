@@ -1,7 +1,10 @@
 const multer = require('multer');
 
 const u_upload = multer({
-    storage: multer.memoryStorage(),        //multer.memoryStorage() is used to store the uploaded files in memory instead of on disk.
+    //storage: multer.memoryStorage(),        multer.memoryStorage() is used to store the uploaded files in memory instead of on disk.
+    storage: multer.diskStorage({
+        destination: 'uploads',
+    }),
     limits: { fileSize: 1024 * 1024 * 1 },  //1MB size limit
     filename: (req, file, cb) => {
         cb(null, file.originalname + "_" + Date.now);
@@ -27,6 +30,6 @@ const p_upload = multer({
         }
     },
     limits: { fileSize: 1024 * 1024 * 1 }
-}).array("posts", 4);
+}).array("posts[]", 4);
 
 module.exports = { u_upload, p_upload }
